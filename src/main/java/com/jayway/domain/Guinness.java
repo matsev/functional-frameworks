@@ -2,20 +2,10 @@ package com.jayway.domain;
 
 import static com.jayway.domain.Type.STOUT;
 
-public class Guinness implements Beer {
+public class Guinness extends Beer {
 
-    @Override
-    public String getName() {
-        return "Guiness";
+    public Guinness() {
+        super("Guiness", STOUT, 20);
     }
 
-    @Override
-    public Type getType() {
-        return STOUT;
-    }
-
-    @Override
-    public int getPrice() {
-        return 8;
-    }
 }
