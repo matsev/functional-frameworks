@@ -25,6 +25,13 @@ public class FunctionalBeer {
         }
     };
 
+    public static final F<Beer,Integer> BEER_SIZE = new F<Beer, Integer>() {
+        @Override
+        public Integer f(Beer beer) {
+            return beer.getSize();
+        }
+    };
+
     public static final F<Beer,String> BEER_NAME = new F<Beer, String>() {
         @Override
         public String f(Beer beer) {
@@ -142,6 +149,16 @@ public class FunctionalBeer {
             }
         };
     }
+
+    /**
+     * Converts centiliters to liters
+     */
+    public static final F<Integer,Double> CL_TO_L = new F<Integer, Double>() {
+            @Override
+            public Double f(Integer sizeInCl) {
+                return sizeInCl / 100.0d;
+            }
+        };
 
     private static Integer priceOf(List<Beer> beers) {
         return beers.map(BEER_PRICE).foldLeft1(Integers.add);

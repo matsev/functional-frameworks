@@ -4,6 +4,6 @@ import static com.jayway.domain.Type.LAGER;
 
 public class Carlsberg extends Beer {
     public Carlsberg() {
-        super("Carlsberg", LAGER, 16);
+        super("Carlsberg", LAGER, 16, 50);
     }
 }

@@ -17,7 +17,7 @@ import static fj.Ord.ord;
 import static fj.function.Integers.add;
 import static org.fest.assertions.Assertions.assertThat;
 
-public class FJSumPriceTypeDemo {
+public class FJSumPricePerUnitDemo {
 
     @Test public void
     calculate_price_of_beers_with_type_lager() {
@@ -76,5 +76,54 @@ public class FJSumPriceTypeDemo {
 
         // All prices
         assertThat(with(prices.values()).foldLeft1(add)).isEqualTo(1460);
+    }
+
+    @Test public void
+    calculate_price_of_beers_per_type_generic_version() {
+        // Given
+        final Receipt receipt = new Receipt();
+        List<Beer> beers = receipt.getBeers();
+
+        // When
+        final Map<Type, Integer> prices = with(beers).sort(ord(BEER_TYPE_ORDER)).group(equal(BEER_TYPE_EQUAL)).foldLeft(sumBeerPriceBy(BEER_TYPE), new HashMap<Type, Integer>());
+
+        System.out.println(prices.keySet());
+        // Then
+        assertThat(prices.get(LAGER)).isEqualTo(620);
+        assertThat(prices.get(ALE)).isEqualTo(400);
+        assertThat(prices.get(STOUT)).isEqualTo(440);
+    }
+
+    @Test public void
+    calculate_price_of_beers_per_name() {
+        // Given
+        final Receipt receipt = new Receipt();
+        List<Beer> beers = receipt.getBeers();
+
+        // When
+        final Map<String, Integer> prices = with(beers).sort(ord(BEER_NAME_ORDER)).group(equal(BEER_NAME_EQUAL)).foldLeft(sumBeerPriceBy(BEER_NAME), new HashMap<String, Integer>());
+
+        // Then
+        assertThat(prices.get("Heineken")).isEqualTo(300);
+        assertThat(prices.get("Bishops Finger")).isEqualTo(400);
+        assertThat(prices.get("Carlsberg")).isEqualTo(320);
+        assertThat(prices.get("Guiness")).isEqualTo(440);
+    }
+
+    // :)
+    @Test public void
+    calculate_price_of_beers_per_price() {
+        // Given
+        final Receipt receipt = new Receipt();
+        List<Beer> beers = receipt.getBeers();
+
+        // When
+        final Map<Integer, Integer> prices = with(beers).sort(ord(BEER_PRICE_ORDER)).group(equal(BEER_PRICE_EQUAL)).foldLeft(sumBeerPriceBy(BEER_PRICE), new HashMap<Integer, Integer>());
+
+        // Then
+        assertThat(prices.get(16)).isEqualTo(320);
+        assertThat(prices.get(20)).isEqualTo(400);
+        assertThat(prices.get(22)).isEqualTo(440);
+        assertThat(prices.get(15)).isEqualTo(300);
     }
 }
