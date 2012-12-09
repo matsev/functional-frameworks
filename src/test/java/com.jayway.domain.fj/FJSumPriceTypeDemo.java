@@ -3,7 +3,6 @@ package com.jayway.domain.fj;
 import com.jayway.domain.Beer;
 import com.jayway.domain.Receipt;
 import com.jayway.domain.Type;
-import fj.Ord;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -14,10 +13,11 @@ import static com.jayway.domain.Type.*;
 import static com.jayway.domain.fj.support.Functional.with;
 import static com.jayway.domain.fj.support.FunctionalBeer.*;
 import static fj.Equal.equal;
+import static fj.Ord.ord;
 import static fj.function.Integers.add;
 import static org.fest.assertions.Assertions.assertThat;
 
-public class FJSumTypeDemo {
+public class FJSumPriceTypeDemo {
 
     @Test public void
     calculate_price_of_beers_with_type_lager() {
@@ -55,7 +55,7 @@ public class FJSumTypeDemo {
         final int sum = with(beers).filter(type(STOUT)).map(BEER_PRICE).foldLeft1(add);
 
         // Then
-        assertThat(sum).isEqualTo(400);
+        assertThat(sum).isEqualTo(440);
     }
 
     // Note: group doesn't sort before grouping, VERY confusing:
@@ -67,14 +67,14 @@ public class FJSumTypeDemo {
         List<Beer> beers = receipt.getBeers();
 
         // When
-        final Map<Type, Integer> prices = with(beers).sort(Ord.ord(BEER_TYPE_ORDER)).group(equal(BEER_TYPE_EQUAL)).foldLeft(SUM_PER_TYPE, new HashMap<Type, Integer>());
+        final Map<Type, Integer> prices = with(beers).sort(ord(BEER_TYPE_ORDER)).group(equal(BEER_TYPE_EQUAL)).foldLeft(SUM_BEER_PRICE_BY_TYPE, new HashMap<Type, Integer>());
 
         // Then
         assertThat(prices.get(LAGER)).isEqualTo(620);
         assertThat(prices.get(ALE)).isEqualTo(400);
-        assertThat(prices.get(STOUT)).isEqualTo(400);
+        assertThat(prices.get(STOUT)).isEqualTo(440);
 
         // All prices
-        assertThat(with(prices.values()).foldLeft1(add)).isEqualTo(1420);
+        assertThat(with(prices.values()).foldLeft1(add)).isEqualTo(1460);
     }
 }

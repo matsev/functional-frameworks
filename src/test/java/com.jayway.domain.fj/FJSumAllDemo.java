@@ -31,7 +31,7 @@ public class FJSumAllDemo {
         }).foldLeft1(Integers.add);
 
         // Then
-        assertThat(sum).isEqualTo(1420);
+        assertThat(sum).isEqualTo(1460);
     }
 
     @Test public void
@@ -44,7 +44,7 @@ public class FJSumAllDemo {
         final int sum = with(beers).map(BEER_PRICE).foldLeft1(Integers.add);
 
         // Then
-        assertThat(sum).isEqualTo(1420);
+        assertThat(sum).isEqualTo(1460);
     }
 
     @Test public void
@@ -58,6 +58,6 @@ public class FJSumAllDemo {
         final int sum = with(beers).map(getPrice).foldLeft1(Integers.add);
 
         // Then
-        assertThat(sum).isEqualTo(1420);
+        assertThat(sum).isEqualTo(1460);
     }
 }

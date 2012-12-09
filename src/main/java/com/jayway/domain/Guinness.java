@@ -5,7 +5,7 @@ import static com.jayway.domain.Type.STOUT;
 public class Guinness extends Beer {
 
     public Guinness() {
-        super("Guiness", STOUT, 20);
+        super("Guiness", STOUT, 22);
     }
 
 }
