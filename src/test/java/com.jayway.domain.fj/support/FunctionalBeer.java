@@ -26,7 +26,7 @@ public class FunctionalBeer {
         }
     };
 
-    public static final F<Beer,F<Beer,Ordering>> BEER_ORD = new F<Beer, F<Beer, Ordering>>() {
+    public static final F<Beer,F<Beer,Ordering>> BEER_PRICE_ORDER = new F<Beer, F<Beer, Ordering>>() {
         @Override
         public F<Beer, Ordering> f(final Beer beer1) {
             return new F<Beer, Ordering>() {
@@ -35,6 +35,24 @@ public class FunctionalBeer {
                     final int beer1Price = beer1.getPrice();
                     final int beer2Price = beer2.getPrice();
                     return beer1Price <= beer2Price ? Ordering.LT : Ordering.GT;
+                }
+            };
+        }
+    };
+
+    public static final F<Beer,F<Beer,Ordering>> BEER_TYPE_ORDER = new F<Beer, F<Beer, Ordering>>() {
+        @Override
+        public F<Beer, Ordering> f(final Beer beer1) {
+            return new F<Beer, Ordering>() {
+                @Override
+                public Ordering f(Beer beer2) {
+                    final Type beer1Type = beer1.getType();
+                    final Type beer2Type = beer2.getType();
+                    final int i = beer1Type.compareTo(beer2Type);
+                    if(i == 0) {
+                        return Ordering.EQ;
+                    }
+                    return i < 0 ? Ordering.LT : Ordering.GT;
                 }
             };
         }

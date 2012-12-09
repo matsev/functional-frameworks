@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static com.jayway.domain.fj.support.Functional.with;
-import static com.jayway.domain.fj.support.FunctionalBeer.BEER_ORD;
+import static com.jayway.domain.fj.support.FunctionalBeer.BEER_PRICE_ORDER;
 import static com.jayway.domain.fj.support.FunctionalBeer.BEER_PRICE;
 import static fj.Ord.ord;
 import static org.fest.assertions.Assertions.assertThat;
@@ -36,7 +36,7 @@ public class FJCheapestBeerDemo {
         List<Beer> beers = receipt.getBeers();
 
         // When
-        final String name = with(beers).minimum(ord(BEER_ORD)).getName();
+        final String name = with(beers).minimum(ord(BEER_PRICE_ORDER)).getName();
 
         // Then
         assertThat(name).isEqualTo("Heineken");
@@ -49,7 +49,7 @@ public class FJCheapestBeerDemo {
         List<Beer> beers = receipt.getBeers();
 
         // When
-        final String name = with(beers).maximum(ord(BEER_ORD)).getName();
+        final String name = with(beers).maximum(ord(BEER_PRICE_ORDER)).getName();
 
         // Then
         assertThat(name).isEqualTo("Guiness");
