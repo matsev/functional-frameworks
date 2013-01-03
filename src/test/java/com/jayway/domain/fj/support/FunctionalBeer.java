@@ -145,7 +145,7 @@ public class FunctionalBeer {
         return new F<Beer, Boolean>() {
             @Override
             public Boolean f(Beer beer) {
-                return beer.getType() == type;
+                return beer.getType().equals(type);
             }
         };
     }

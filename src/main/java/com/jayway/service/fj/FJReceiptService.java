@@ -22,9 +22,9 @@ public class FjReceiptService implements ReceiptService {
     public int getPriceOfCheapestBeer(List<Beer> beers) {
         Beer[] beerArray = beers.toArray(new Beer[beers.size()]);
 
-        Integer minimum = list(beerArray).map(BEER_PRICE).minimum(Ord.intOrd);
+        int minPrice = fj.data.List.list(beerArray).map(BEER_PRICE).minimum(Ord.intOrd);
 
-        return minimum;
+        return minPrice;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class FjReceiptService implements ReceiptService {
     public int getNbrOfBeersPerType(List<Beer> beers, Type type) {
         Beer[] beerArray = beers.toArray(new Beer[beers.size()]);
 
-        int nbrOfBeers = list(beerArray).filter(BEER_IS_OF_TYPE(type)).length();
+        int nbrOfBeers = list(beerArray).filter(isType(type)).length();
 
         return nbrOfBeers;
     }
@@ -162,7 +162,7 @@ public class FjReceiptService implements ReceiptService {
     /**
      * Checks if the beer is of the specified type.
      */
-    public static F<Beer, Boolean> BEER_IS_OF_TYPE(final Type type) {
+    public static F<Beer, Boolean> isType(final Type type) {
         return new F<Beer, Boolean>() {
             @Override
             public Boolean f(Beer beer) {
@@ -177,7 +177,7 @@ public class FjReceiptService implements ReceiptService {
     public static final F<Beer, F<Beer, Boolean>> BEER_TYPE_EQUAL = new F<Beer, F<Beer, Boolean>>() {
         @Override
         public F<Beer, Boolean> f(final Beer beer) {
-            return BEER_IS_OF_TYPE(beer.getType());
+            return isType(beer.getType());
         }
     };
 
