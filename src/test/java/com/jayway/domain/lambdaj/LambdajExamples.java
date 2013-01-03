@@ -1,6 +1,7 @@
 package com.jayway.domain.lambdaj;
 
 import ch.lambdaj.function.aggregate.Aggregator;
+import ch.lambdaj.function.aggregate.PairAggregator;
 import com.jayway.domain.Beer;
 import com.jayway.domain.Receipt;
 import org.junit.Before;
@@ -28,6 +29,20 @@ public class LambdajExamples {
             return sum;
         }
     };
+
+    public static final Aggregator<Integer> SUM2 = new PairAggregator<Integer>() {
+
+        @Override
+        protected Integer emptyItem() {
+            return 0;
+        }
+
+        @Override
+        protected Integer aggregate(Integer sum, Integer operand) {
+            return sum + operand;
+        }
+    };
+
     private List<Beer> beers;
 
     @Before
@@ -68,6 +83,29 @@ public class LambdajExamples {
     @Test
     public void total_sum_reduce() {
         int sum = with(beers).extract(on(Beer.class).getPrice()).aggregate(SUM);
+        System.out.println(sum);
+    }
+
+    @Test
+    public void total_sum_reduce2() {
+        int sum = with(beers).extract(on(Beer.class).getPrice()).aggregate(SUM2);
+        System.out.println(sum);
+    }
+
+    @Test
+    public void total_sum_reduce3() {
+        int sum = with(beers).extract(on(Beer.class).getPrice()).aggregate(new PairAggregator<Integer>() {
+            @Override
+            protected Integer emptyItem() {
+                return 0;
+            }
+
+            @Override
+            protected Integer aggregate(Integer sum, Integer operand) {
+                return sum + operand;
+            }
+        });
+
         System.out.println(sum);
     }
 
